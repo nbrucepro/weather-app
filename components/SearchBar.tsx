@@ -1,11 +1,11 @@
-import React,{ChangeEvent,useState} from 'react'
+import React,{ChangeEvent,useState,MouseEvent} from 'react'
 import { Button,FormControl,Input } from '@chakra-ui/react';
 import {
   IoMdSearch,
 } from "react-icons/io";
 interface Props {
   handleInput:(e:ChangeEvent<HTMLInputElement>) => void;
-  handleSubmit:(e:ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit:(e:MouseEvent<HTMLButtonElement>) => void;
 }
 export default function SearchBar({handleInput,handleSubmit}:Props) {
   return (
@@ -42,7 +42,7 @@ rounded-full backdrop-blur-[32px] mb-8`}
       justifyContent="center"
       alignItems="center"
       type="submit"
-      onClick={(e:ChangeEvent<HTMLInputElement>) => handleSubmit(e)}
+      onClick={(e:MouseEvent<HTMLButtonElement>) => handleSubmit(e)}
     >
       <IoMdSearch className="text-2xl text-white" />
     </Button>
