@@ -1,108 +1,204 @@
 import {
-  Avatar,
-  AvatarGroup,
-  Badge,
   Flex,
   Button,
-  Icon,
-  Image,
   Text,
-  DarkMode,
-  useColorModeValue,
-  Grid,
-  GridItem,
-  SimpleGrid,
   Box,
 } from "@chakra-ui/react";
+import {
+  BsCloudHaze2Fill,
+  BsCloudDrizzleFill,
+  BsEye,
+  BsWater,
+  BsThermometer,
+  BsWind,
+} from "react-icons/bs";
+import {
+  IoMdSunny,
+  IoMdRainy,
+  IoMdCloudy,
+  IoMdSnow,
+  IoMdThunderstorm,
+} from "react-icons/io";
+
+import { ImSpinner8 } from "react-icons/im";
+
+import { TbTemperatureCelsius } from "react-icons/tb";
+import { TbTemperatureFahrenheit } from "react-icons/tb";
+import { useState } from "react";
 // Assets
-import { MdPeople } from "react-icons/md";
-import { IoEllipsisHorizontalSharp } from "react-icons/io5";
-import {BiWind} from "react-icons/bi"
 
-import { weatherState } from "types";
+export default function WeatherCard({ loading, data }: any) {
+  // set the icon according to the weather
+  let icon;
 
-export default function WeatherCard({
-  temperature,
-  description,
-  humidity,
-  windSpeed,
-  icon,
-}: weatherState) {
-  let boxBg = useColorModeValue("# !important", "white !important");
-  let mainText = useColorModeValue("gray.800", "white");
-  let iconBox = useColorModeValue("gray.100", "whiteAlpha.200");
-  let iconColor = useColorModeValue("brand.200", "white");
-
+  switch (data?.weather[0].main) {
+    case "Clouds":
+      icon = <IoMdCloudy />;
+      break;
+    case "Haze":
+      icon = <BsCloudHaze2Fill />;
+      break;
+    case "Rain":
+      icon = <IoMdRainy className="text-[#31cafb]" />;
+      break;
+    case "Clear":
+      icon = <IoMdSunny className="text-[#ffde33]" />;
+      break;
+    case "Drizzle":
+      icon = <BsCloudDrizzleFill className="text-[#31cafb]" />;
+      break;
+    case "Snow":
+      icon = <IoMdSnow className="text-[#31cafb]" />;
+      break;
+    case "Thunderstorm":
+      icon = <IoMdThunderstorm />;
+      break;
+  }
+  // date object
+  const date = new Date();
+  const [tempa,setTempa] = useState(data?.main?.temp);
+  const [unit,setunit] = useState('c');
+  const handleTempereture = () => {
+    if(unit == 'c'){
+      setTempa((tempa*9/5)+32);
+      setunit('f');
+    }
+    if(unit == 'f'){
+      setTempa((tempa-32)*5/9);
+      setunit('c');
+      console.log(tempa);
+    }
+    console.log(tempa);
+    console.log(data);
+    console.log(tempa);
+    console.log('tmp',data.main?.temp);
+  }
   return (
-    <Flex
-      borderRadius="20px"
-      bgGradient="radial(#000, gray, #6531BD)"
-      p="15px"
-      h="385px"
-      w={{ base: "315px", md: "345px" }}
-      alignItems="center"
-      direction="column"
+    <>
+    <Box
+      w="100%"
+      maxWidth="450px"
+      background="blackAlpha.500"
+      minH="584px"
+      color="white"
+      backdropBlur="32px"
+      borderRadius="32px"
+      py="12"
+      px="6"
     >
-      <Flex w="100%" mb="18px">
-        <Flex
-          w="38px"
-          h="38px"
-          align="center"
-          justify="center"
-          borderRadius="50%"
-          me="12px"
-          bg={iconBox}
-        >
-          <Image
-            src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
-            alt={description}
-          />
+      {loading ? (
+        <Flex w="100%" h="100%" justifyContent="center" alignItems="center">
+          <ImSpinner8 className="text-white text-5xl animate-spin" />
         </Flex>
-        <Text
-          my="auto"
-          fontWeight="600"
-          color={mainText}
-          textAlign="center"
-          fontSize="xl"
-          me="auto"
-        >
-          Teams
-        </Text>
-      </Flex>
-      <Text
-        maxW="100%"
-        borderRadius="20px"
-        mt="50px"
-        color={useColorModeValue("white", "white")}
-        fontSize="4xl"
-      >
-        {temperature}
-      </Text>
-      <Text color={useColorModeValue("white", "white")} fontSize="12px">
-        {description}
-      </Text>
-      <SimpleGrid columns={2} spacingX='6' spacingY='6px' mt="20" color={useColorModeValue("white", "white")}>
+      ) : (
         <Box>
-          <Icon as={BiWind}/>
-          <Text px='2' display='inline'>Visibility: {windSpeed}</Text>
+          {/* card top */}
+          <Flex alignItems="center" gap="5">
+            {/* icon */}
+            <Box fontSize="87px">{icon}</Box>
+            <Box>
+              {/* country name */}
+              <Box fontSize="2xl" fontWeight="semibold">
+                {data.name}, {data.sys.country}
+              </Box>
+              {/* date */}
+              <Box>
+                {date.getUTCDate()}/{date.getUTCMonth() + 1}/
+                {date.getUTCFullYear()}
+              </Box>
+            </Box>
+          </Flex>
+          {/* card body */}
+          <Box my="20">
+            <Flex justifyContent="center" alignItems="center">
+              {/* temp */}
+              <div className="text-[144px] leading-none font-light">
+                {parseInt(tempa)}
+                {/* {parseInt(data.main.temp)} */}
+              </div>
+              {/* celsius icon */}
+              <Box fontSize="4xl">
+                {
+                  unit == 'c' ?(
+                    <TbTemperatureCelsius />                     
+                  ):(                       
+                    <TbTemperatureFahrenheit/>           
+                  )
+                }
+              </Box>
+            </Flex>
+            {/* weather description */}
+            <Box textTransform="capitalize" textAlign="center">
+              {data.weather[0].description}
+            </Box>
+          </Box>
+          {/* card bottom */}
+          <Flex maxW="378px" mx="auto" flexDirection="column" rowGap="6">
+            <Flex justifyContent="space-between">
+              <Flex alignItems="center" gap="2">
+                {/* icon */}
+                <Box fontSize="20px">
+                  <BsEye />
+                </Box>
+                <Box>
+                  Visibility{" "}
+                  <Text ml="2" display="inline">
+                    {data.visibility / 1000} km
+                  </Text>
+                </Box>
+              </Flex>
+              <Flex alignItems="center" gap="2">
+                {/* icon */}
+                <Box fontSize="20px">
+                  <BsThermometer />
+                </Box>
+                <Flex>
+                  Feels like
+                  <Flex ml="2">
+                    {parseInt(data.main.feels_like)}
+                    <TbTemperatureCelsius />
+                  </Flex>
+                </Flex>
+              </Flex>
+            </Flex>
+            <Flex justifyContent="space-between">
+              <Flex alignItems="center" gap="2">
+                {/* icon */}
+                <Box fontSize="20px">
+                  <BsWater />
+                </Box>
+                <Box>
+                  Humidity
+                  <Text display="inline" ml="2">
+                    {data.main.humidity} %
+                  </Text>
+                </Box>
+              </Flex>
+              <Flex alignItems="center" gap="2">
+                {/* icon */}
+                <Box fontSize="20px">
+                  <BsWind />
+                </Box>
+                <Box>
+                  Wind{" "}
+                  <Text display="inline" ml="2">
+                    {data.wind.speed} m/s
+                  </Text>
+                </Box>
+              </Flex>
+            </Flex>
+          </Flex>
         </Box>
-        <Box>
-          <Text px='2' display='inline'>Humidity: {humidity}</Text>
-        </Box>
-        <Box>
-        <Icon as={BiWind}/>          
-          <Text px='2' display='inline'>wind: {windSpeed}</Text>
-        </Box>
-        <Box>
-        <Text px='2' display='inline'>Temperature: {temperature}</Text>          
-        </Box>
-      </SimpleGrid>
-      {/* <Flex mt="auto" justify="space-between" w="100%" align="center">
-        <Text>
-          Temperature: {temperature}
-        </Text>
-       
-      </Flex> */}
-    </Flex>
+      )}
+    </Box>
+    <Box
+    my='5'
+    >
+
+      <Button
+      onClick={handleTempereture}
+      >Change T° unit</Button>
+    </Box>
+    </>
   );
 }
