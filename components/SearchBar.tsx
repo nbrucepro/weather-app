@@ -32,6 +32,7 @@ rounded-full backdrop-blur-[32px] mb-8`}
       fontSize="15px"
       pl="6px"
       h="100%"
+      _hover={{background:'transparent'}}      
     />
     <Button
       background="transparent"
@@ -42,6 +43,7 @@ rounded-full backdrop-blur-[32px] mb-8`}
       justifyContent="center"
       alignItems="center"
       type="submit"
+      _hover={{background:'transparent'}}      
       onClick={(e:MouseEvent<HTMLButtonElement>) => handleSubmit(e)}
     >
       <IoMdSearch className="text-2xl text-white" />
