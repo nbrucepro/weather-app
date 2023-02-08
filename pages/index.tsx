@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState,MouseEvent } from "react";
 import type { NextPage } from "next";
 import axios from "axios";
 
@@ -17,7 +17,7 @@ const Home: NextPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [animate, setAnimate] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState<any>("");
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -25,7 +25,7 @@ const Home: NextPage = () => {
     console.log(e);
   };
 
-  const handleSubmit = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     // if input value is not empty
     if (inputValue !== "") {
       // set location
