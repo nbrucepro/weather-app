@@ -42,7 +42,7 @@ rounded-full backdrop-blur-[32px] mb-8`}
       justifyContent="center"
       alignItems="center"
       type="submit"
-      onClick={(e) => handleSubmit(e)}
+      onClick={(e:ChangeEvent<HTMLInputElement>) => handleSubmit(e)}
     >
       <IoMdSearch className="text-2xl text-white" />
     </Button>
