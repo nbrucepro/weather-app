@@ -111,7 +111,6 @@ export default function WeatherCard({ loading, data }: any) {
               <div className="text-[144px] leading-none font-light">
                 {unit == 'f' ? (                 
                   <span>{parseInt(((data?.main?.temp)*9/5)+32)}</span>
-                  parseInt(4.4)
                 ): (
                   <span>{parseInt(((data?.main?.temp)-32)*5/9)}</span>                
                 )                 
