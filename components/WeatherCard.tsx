@@ -109,11 +109,11 @@ export default function WeatherCard({ loading, data }: any) {
             <Flex justifyContent="center" alignItems="center">
               {/* temp */}
               <div className="text-[144px] leading-none font-light">
-                {unit == 'f' ? (
-//                 parseInt(((data?.main?.temp)*9/5)+32)
+                {unit == 'f' ? (                 
+                  <span>{parseInt(((data?.main?.temp)*9/5)+32)}</span>
                   parseInt(4.4)
                 ): (
-                parseInt(((data?.main?.temp)-32)*5/9)
+                  <span>{parseInt(((data?.main?.temp)-32)*5/9)}</span>                
                 )                 
                 }
               </div>
