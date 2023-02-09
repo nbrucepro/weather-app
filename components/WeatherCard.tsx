@@ -58,20 +58,18 @@ export default function WeatherCard({ loading, data }: any) {
   const date = new Date();
   const [tempa,setTempa] = useState(data?.main?.temp);
   const [unit,setunit] = useState('c');
+  const [clicked,setclicked] = useState(false);
   const handleTempereture = () => {
     if(unit == 'c'){
-      setTempa((tempa*9/5)+32);
+      setTempa(((data?.main?.temp)*9/5)+32);
       setunit('f');
+      setclicked(true);
     }
     if(unit == 'f'){
-      setTempa((tempa-32)*5/9);
+      setTempa(((data?.main?.temp)-32)*5/9);
       setunit('c');
-      console.log(tempa);
-    }
-    console.log(tempa);
-    console.log(data);
-    console.log(tempa);
-    console.log('tmp',data.main?.temp);
+      setclicked(true);
+     }
   }
   return (
     <>
@@ -113,8 +111,8 @@ export default function WeatherCard({ loading, data }: any) {
             <Flex justifyContent="center" alignItems="center">
               {/* temp */}
               <div className="text-[144px] leading-none font-light">
-                {parseInt(tempa)}
-                {/* {parseInt(data.main.temp)} */}
+<!--                 {parseInt(tempa)} -->
+                {{parseInt(clicked?tempa:data.main.temp)}}
               </div>
               {/* celsius icon */}
               <Box fontSize="4xl">
