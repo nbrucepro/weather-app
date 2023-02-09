@@ -111,7 +111,6 @@ export default function WeatherCard({ loading, data }: any) {
             <Flex justifyContent="center" alignItems="center">
               {/* temp */}
               <div className="text-[144px] leading-none font-light">
-<!--                  {parseInt(tempa)}  -->
                 {parseInt(clicked?(tempa):(data.main.temp))}
               </div>
               {/* celsius icon */}
