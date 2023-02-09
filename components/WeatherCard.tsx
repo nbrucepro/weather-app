@@ -112,7 +112,7 @@ export default function WeatherCard({ loading, data }: any) {
               {/* temp */}
               <div className="text-[144px] leading-none font-light">
 <!--                  {parseInt(tempa)}  -->
-                {parseInt(clicked?tempa:data.main.temp)}
+                {parseInt(clicked?(tempa):(data.main.temp))}
               </div>
               {/* celsius icon */}
               <Box fontSize="4xl">
